@@ -28,16 +28,22 @@ namespace OmniWatcher.DataServices
 
         }
 
-        internal override IEnumerable<SessionDataModel> GetSessions()
+        internal override IEnumerable<SessionDataModel> GetSessions(string channel)
         {
             rwLock.AcquireReaderLock(500);
-            return _Sessions;
+            return _GetSessions(channel);
         }
 
-        internal override SessionDataModel GetSession(int sessionId)
+        internal override SessionDataModel GetSession(string channel, int sessionId)
         {
             rwLock.AcquireReaderLock(500);
-            return _Sessions.First(e => e.SessionId == sessionId);
+            return _GetSessions(channel).FirstOrDefault(e => e.SessionId == sessionId);
+        }
+
+
+        private IEnumerable<SessionDataModel> _GetSessions(string channel)
+        {
+            return _Sessions.FindAll(e => e.Channel == channel);
         }
     }
 }

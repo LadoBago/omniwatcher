@@ -1,4 +1,5 @@
-﻿using OmniWatcher.Models;
+﻿using OmniWatcher.DataServices;
+using OmniWatcher.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,15 @@ namespace OmniWatcher.Controllers
     public class SessionController : ApiController
     {
         // GET: api/Session
-        public IEnumerable<SessionDataModel> Get()
+        public IEnumerable<SessionDataModel> Get(string channel)
         {
-            return new SessionDataModel[] {
-                new SessionDataModel(){
-                    Channel = "BankOnline",
-                    CreateDate = DateTime.Now,
-                    IsEmployee = false,
-                    LastActiveDate = DateTime.Now,
-                    SessionId = 1
-                }
-            };
+            return SessionDataService.Default.GetSessions(channel);
         }
 
         // GET: api/Session/5
-        public SessionDataModel Get(int id)
+        public SessionDataModel Get(string channel, int id)
         {
-            return Get().FirstOrDefault(e => e.SessionId == id);
+            return SessionDataService.Default.GetSession(channel, id);
         }
     }
 }
