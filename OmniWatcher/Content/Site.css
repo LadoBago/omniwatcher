@@ -1,24 +1,70 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html, body {
+    height: 100%;
+    width: 100%;
+    border: 1px;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+div {
+    border-collapse: collapse;
+    border: 1px dotted black;
+    margin: 0px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+#div-header {
+    height: 15%;
+    width: 100%;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+#div-body {
+    height: 80%;
+    width: 100%;
+}
+
+#div-bottom {
+    width: 100%;
+}
+
+footer {
+}
+
+#div-channels {
+    height: 100%;
+    width: 100%;
+    float: left;
+    vertical-align: top;
+}
+
+#div-menu {
+    height: 50%;
+}
+
+div.channel {
+    height: 32%;
+    width: 100%;
+}
+
+div.channel-activity {
+    height: 100%;
+    width: 75%;
+    float: left;
+}
+
+div.channel-ticker {
+    height: 100%;
+    width: 25%;
+    float: right;
+}
+
+.active1 {
+    height: 5px;
+    width: 5px;
+    background-color: lightgreen;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 3px 3px;
+}
+
+circle:hover {
+    cursor: pointer;
+    
 }
