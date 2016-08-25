@@ -18,7 +18,7 @@ namespace OmniWatcher.DataServices
             rwLock = new ReaderWriterLock();
             _Sessions = new List<SessionDataModel> {
                 new SessionDataModel(){
-                    Channel = "BankOnline",
+                    Channel = "bankonline",
                     CreateDate = DateTime.Now,
                     IsEmployee = false,
                     LastActiveDate = DateTime.Now,
