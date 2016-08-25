@@ -1,13 +1,25 @@
-﻿@model OmniWatcher.Models.IndexViewModel
-@section scripts
+﻿@section scripts
 {
     @Scripts.Render("~/bundles/angular")
     <script src="~/Scripts/Site/main.js"></script>
-    <script src="~/Scripts/Site/app.js"></script>
+    <script src="~/Angular/app.module.js"></script>
 }
 
-<div id="div-channels">
-    @foreach (string channel in Model.Channels)
+<div id="div-channels" ng-app="channelsApp" ng-controller="channelsController">
+    <div class="channel" ng-attr-id="{{'div-' + channel.code}}" ng-repeat="channel in channels">
+        <div class="channel-activity">
+            <svg height="100%" width="100%">
+                <circle id="123" cx="50" cy="50" r="5" fill="lightgreen" onmouseover="javascript: circle_mouseover(this);" onmouseout="javascript: circle_mouseout(this);" />
+                <circle id="124" cx="60" cy="50" r="5" fill="lightgreen" onmouseover="javascript: circle_mouseover(this);" onmouseout="javascript: circle_mouseout(this);" />
+            </svg>
+        </div>
+        <div class="channel-ticker">
+
+        </div>
+    </div>
+
+
+    @*@foreach (string channel in Model.Channels)
     {
         <div id="@(string.Concat("div-", channel))" class="channel">
             <div class="channel-activity">
@@ -20,6 +32,6 @@
 
             </div>
         </div>
-    }
+    }*@
 
 </div>

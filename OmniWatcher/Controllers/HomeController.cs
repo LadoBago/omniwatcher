@@ -11,10 +11,7 @@ namespace OmniWatcher.Controllers
     {
         public ActionResult Index()
         {
-            IndexViewModel viewModel = new IndexViewModel();
-            viewModel.Channels = new string[] { "BankOnline", "MobileBanking", "BasisNet2CC" };
-
-            return View(viewModel);
+            return View();
         }
     }
 }

@@ -5,10 +5,10 @@ using System.Web;
 
 namespace OmniWatcher.Models
 {
-    public class IndexViewModel
-    {
-        public string[] Channels { get; set; }
+    //public class IndexViewModel
+    //{
+    //    public string[] Channels { get; set; }
 
-    }
+    //}
 
 }
