@@ -19,9 +19,9 @@ namespace OmniWatcher.DataServices
             _Sessions = new List<SessionDataModel> {
                 new SessionDataModel(){
                     Channel = "bankonline",
-                    CreateDate = DateTime.Now,
+                    CreateDate = DateTime.Now.AddHours(-1),
                     IsEmployee = false,
-                    LastActiveDate = DateTime.Now,
+                    LastActiveDate = DateTime.Now.AddMinutes(-25),
                     SessionId = 1
                 }
             };

@@ -5,16 +5,18 @@
     <script src="~/Angular/app.module.js"></script>
 }
 
-<div id="div-channels" ng-app="channelsApp" ng-controller="channelsController">
+<div id="div-channels" ng-app="channelsApp" ng-controller="channelsController as controller">
     <div class="channel" ng-attr-id="{{'div-' + channel.code}}" ng-repeat="channel in channels">
         <div class="channel-activity">
             <svg height="100%" width="100%">
                 <circle id="123" cx="50" cy="50" r="5" fill="lightgreen" onmouseover="javascript: circle_mouseover(this);" onmouseout="javascript: circle_mouseout(this);" />
                 <circle id="124" cx="60" cy="50" r="5" fill="lightgreen" onmouseover="javascript: circle_mouseover(this);" onmouseout="javascript: circle_mouseout(this);" />
+                <circle ng-attr-cx="{{session.SessionDeactMins*10}}" ng-attr-cy="{{session.SessionExistMins}}" ng-attr-id="{{'circle-'+channel.code+'-'+session.SessionId}}" ng-repeat="session in sessions" r="5"></circle>
             </svg>
         </div>
         <div class="channel-ticker">
-            {{sessions}}
+            <span>{{sessions[0].SessionExistMins}}</span>
+            {{sessions[0].SessionDeactMins}}
         </div>
     </div>
 

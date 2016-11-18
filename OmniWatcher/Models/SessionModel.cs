@@ -9,8 +9,27 @@ namespace OmniWatcher.Models
     {
         public string Channel { get; set; }
         public int SessionId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime LastActiveDate { get; set; }
+
+        public DateTime CreateDate
+        {
+            get; set;
+        }
+
+        public DateTime LastActiveDate
+        {
+            get; set;
+        }
         public bool IsEmployee { get; set; }
+
+        public int SessionExistMins
+        {
+            get { return GetDiffMins(this.CreateDate); }
+        }
+        public int SessionDeactMins
+        {
+            get { return GetDiffMins(this.LastActiveDate); }
+        }
+
+        private Func<DateTime, int> GetDiffMins = e => (int)Math.Min((DateTime.Now - e).TotalMinutes, 50);
     }
 }
