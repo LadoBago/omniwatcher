@@ -11,14 +11,12 @@ namespace OmniWatcher.Controllers
 {
     public class SessionController : ApiController
     {
-        // GET: api/Session
-        public IEnumerable<SessionDataModel> Get(string channel)
+        public GetSessionsResponse GetSessions(string channel, string code)
         {
-            return SessionDataService.Default.GetSessions(channel);
+            return SessionDataService.Default.GetSessions(channel, code);
         }
 
-        // GET: api/Session/5
-        public SessionDataModel Get(string channel, int id)
+        public SessionDataModel GetSession(string channel, int id)
         {
             return SessionDataService.Default.GetSession(channel, id);
         }

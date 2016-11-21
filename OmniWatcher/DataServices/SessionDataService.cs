@@ -12,7 +12,7 @@ namespace OmniWatcher.DataServices
             get { return new SessionDataService_Demo(); }
         }
 
-        internal abstract IEnumerable<SessionDataModel> GetSessions(string channel);
+        internal abstract GetSessionsResponse GetSessions(string channel, string code);
         internal abstract SessionDataModel GetSession(string channel, int sessionId);
     }
 }

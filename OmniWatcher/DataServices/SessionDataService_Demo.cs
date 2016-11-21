@@ -23,15 +23,40 @@ namespace OmniWatcher.DataServices
                     IsEmployee = false,
                     LastActiveDate = DateTime.Now.AddMinutes(-12),
                     SessionId = 1
+                },
+                new SessionDataModel(){
+                    Channel = "bankonline",
+                    CreateDate = DateTime.Now.AddMinutes(-15),
+                    IsEmployee = false,
+                    LastActiveDate = DateTime.Now.AddMinutes(-1),
+                    SessionId = 2
+                },
+                new SessionDataModel(){
+                    Channel = "mobile-banking",
+                    CreateDate = DateTime.Now.AddMinutes(-32),
+                    IsEmployee = false,
+                    LastActiveDate = DateTime.Now.AddMinutes(-3),
+                    SessionId = 2
+                },
+                new SessionDataModel(){
+                    Channel = "bn2cc-client",
+                    CreateDate = DateTime.Now.AddMinutes(-20),
+                    IsEmployee = false,
+                    LastActiveDate = DateTime.Now.AddMinutes(-7),
+                    SessionId = 2
                 }
-            };
 
+            };
         }
 
-        internal override IEnumerable<SessionDataModel> GetSessions(string channel)
+        internal override GetSessionsResponse GetSessions(string channel, string code)
         {
             rwLock.AcquireReaderLock(500);
-            return _GetSessions(channel);
+            GetSessionsResponse res = new GetSessionsResponse();
+            res.SessionsList = _GetSessions(channel);
+            res.Code = code;
+
+            return res;
         }
 
         internal override SessionDataModel GetSession(string channel, int sessionId)

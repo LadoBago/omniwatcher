@@ -5,6 +5,13 @@ using System.Web;
 
 namespace OmniWatcher.Models
 {
+
+    public class GetSessionsResponse
+    {
+        public string Code { get; set; }
+        public IEnumerable<SessionDataModel> SessionsList { get; set; }
+    }
+
     public class SessionDataModel
     {
         public string Channel { get; set; }
@@ -30,6 +37,6 @@ namespace OmniWatcher.Models
             get { return GetDiffMins(this.LastActiveDate); }
         }
 
-        private Func<DateTime, int> GetDiffMins = e => (int)Math.Min((DateTime.Now - e).TotalMinutes, 50);
+        private Func<DateTime, int> GetDiffMins = e => (int)Math.Min((DateTime.Now - e).TotalMinutes, 60);
     }
 }
