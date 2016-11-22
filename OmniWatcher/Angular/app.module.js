@@ -17,7 +17,8 @@ function getDataFactory(http)
 
             return http({
                 method: 'GET',
-                url: url
+                url: url,
+                cache: false
             });
         }
     };
@@ -27,23 +28,26 @@ function getDataFactory(http)
 
 channelsApp.factory("dataFactory", ["$http", getDataFactory]);
 
-function channelsController(scope, dataService)
+function channelsController(scope, dataService, interval)
 {
     scope.channels = dataService.getChannels();
-    for (var ch in scope.channels) {
-        var channel = scope.channels[ch];
-        dataService.getSessions(channel.dbcode, ch)
-            .then(function (response) {
-                if (response.data.Code != undefined) {
-                    scope.channels[response.data.Code].sessions = response.data.SessionsList;
-                }
-            }, function (response) {
 
-            });
-    }
+    interval(function () {
+        for (var ch in scope.channels) {
+            var channel = scope.channels[ch];
+            dataService.getSessions(channel.dbcode, ch)
+                .then(function (response) {
+                    if (response.data.Code != undefined) {
+                        scope.channels[response.data.Code].sessions = response.data.SessionsList;
+                    }
+                }, function (response) {
+
+                });
+        }
+    }, 10000);
 }
 
-channelsApp.controller("channelsController", ["$scope", "dataFactory", channelsController]);
+channelsApp.controller("channelsController", ["$scope", "dataFactory", "$interval", channelsController]);
 
 function mySetCxAttribDirective()
 {
@@ -89,3 +93,25 @@ function mySetCyAttribDirective() {
 }
 
 channelsApp.directive("mySetCy", mySetCyAttribDirective);
+
+function myFillColorAttribDirective() {
+    var directive = {
+        restrict: "A",
+        link: function (scope, element, attrs, controller, transcludeFn) {
+            var isEmployee = attrs.myFillColor == 'true';
+            if (isEmployee)
+            {
+                element.attr('fill', 'orange');
+            }
+            else
+            {
+                element.attr('fill', 'lightgreen');
+            }
+
+        }
+    };
+
+    return directive;
+}
+
+channelsApp.directive("myFillColor", myFillColorAttribDirective);
