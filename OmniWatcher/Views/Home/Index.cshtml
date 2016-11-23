@@ -9,7 +9,15 @@
     <div class="channel" ng-attr-id="{{'div-' + channel.code}}" ng-repeat="channel in channels">
         <div class="channel-activity">
             <svg height="100%" width="100%">
-                <circle my-fill-color="{{session.IsEmployee}}" my-set-cx="{{session.SessionDeactMins}}" my-set-cy="{{session.SessionExistMins}}" ng-attr-id="{{'circle-'+channel.code+'-'+session.SessionId}}" ng-repeat="session in channel.sessions" r="5" onmouseover="javascript: circle_mouseover(this);" onmouseout="javascript: circle_mouseout(this);"></circle>
+                <circle 
+                        my-fill-color="{{session.IsEmployee}}" 
+                        my-set-cx="{{session.SessionDeactMins}}" 
+                        my-set-cy="{{session.SessionExistMins}}" 
+                        ng-attr-id="{{'circle-'+channel.code+'-'+session.SessionId}}" 
+                        ng-repeat="session in channel.sessions" r="5" 
+                        onmouseover="javascript: circle_mouseover(this);" 
+                        onmouseout="javascript: circle_mouseout(this);"
+                ></circle>
             </svg>
         </div>
         <div class="channel-ticker">
