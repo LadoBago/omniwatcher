@@ -48,7 +48,7 @@ function channelsController(scope, dataService, interval)
 
     scope.channels = dataService.getChannels();
     f();
-    interval(f, 10000);
+    interval(f, 5000);
 }
 
 channelsApp.controller("channelsController", ["$scope", "dataFactory", "$interval", channelsController]);
