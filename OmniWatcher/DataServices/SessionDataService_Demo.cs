@@ -49,14 +49,10 @@ namespace OmniWatcher.DataServices
             };
         }
 
-        internal override GetSessionsResponse GetSessions(string channel, string code)
+        internal override IEnumerable<SessionDataModel> GetSessions(string channel)
         {
             rwLock.AcquireReaderLock(500);
-            GetSessionsResponse res = new GetSessionsResponse();
-            res.SessionsList = _GetSessions(channel);
-            res.Code = code;
-
-            return res;
+            return _GetSessions(channel);
         }
 
         internal override SessionDataModel GetSession(string channel, int sessionId)

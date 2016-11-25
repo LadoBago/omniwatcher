@@ -11,6 +11,10 @@ namespace OmniWatcher.Controllers
     {
         public ActionResult Index()
         {
+            string appl = this.Request.ApplicationPath;
+            appl = appl.Trim('/');
+            this.ViewData.Add(new KeyValuePair<string, object>("appl", appl));
+
             return View();
         }
     }

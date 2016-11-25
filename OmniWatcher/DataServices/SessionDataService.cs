@@ -9,10 +9,10 @@ namespace OmniWatcher.DataServices
     public abstract class SessionDataService
     {
         public static SessionDataService Default {
-            get { return new SessionDataService_Demo(); }
+            get { return new SessionDataService_DB(); }
         }
 
-        internal abstract GetSessionsResponse GetSessions(string channel, string code);
+        internal abstract IEnumerable<SessionDataModel> GetSessions(string channel);
         internal abstract SessionDataModel GetSession(string channel, int sessionId);
     }
 }

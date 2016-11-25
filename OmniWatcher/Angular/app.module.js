@@ -1,9 +1,9 @@
 ﻿var channelsApp = angular.module("channelsApp", []);
 
 var initchannels = {
-        BankOnline: { dbcode: "bankonline" },
-        MobileBanking: { dbcode: "mobile-banking" },
-        BasisNet2CC: { dbcode: "bn2cc-client" }
+    BankOnline: { dbcode: "bankonline", code: "BankOnline" },
+    MobileBanking: { dbcode: "mobile-banking", code: "MobileBanking" },
+    BasisNet2CC: { dbcode: "bn2cc-client", code: "BasisNet2CC" }
     };
 
 function getDataFactory(http)
@@ -14,6 +14,8 @@ function getDataFactory(http)
         },
         getSessions: function (channel, code) {
             var url = '/api/Sessions/' + channel + '/' + code;
+            if (app.length > 0)
+                url = '/' + app + url;
 
             return http({
                 method: 'GET',
@@ -30,9 +32,7 @@ channelsApp.factory("dataFactory", ["$http", getDataFactory]);
 
 function channelsController(scope, dataService, interval)
 {
-    scope.channels = dataService.getChannels();
-
-    interval(function () {
+    var f = function () {
         for (var ch in scope.channels) {
             var channel = scope.channels[ch];
             dataService.getSessions(channel.dbcode, ch)
@@ -44,7 +44,11 @@ function channelsController(scope, dataService, interval)
 
                 });
         }
-    }, 10000);
+    };
+
+    scope.channels = dataService.getChannels();
+    f();
+    interval(f, 10000);
 }
 
 channelsApp.controller("channelsController", ["$scope", "dataFactory", "$interval", channelsController]);
@@ -61,7 +65,7 @@ function mySetCxAttribDirective()
             var el = document.getElementById(divId).getElementsByClassName("channel-activity")[0];
             var divWidth = el.clientWidth;
             var deactMins = attrs.mySetCx;
-            var cx = 10 + (divWidth - 20) * deactMins / 60;
+            var cx = 5 + (divWidth - 10) * deactMins / 3600;
 
             element.attr('cx', cx);
         }
@@ -83,7 +87,7 @@ function mySetCyAttribDirective() {
             var el = document.getElementById(divId).getElementsByClassName("channel-activity")[0];
             var divheight = el.clientHeight;
             var existMins = attrs.mySetCy;
-            var cy = 5 + (divheight - 10) * existMins / 60;
+            var cy = 5 + (divheight - 10) * existMins / 3600;
 
             element.attr('cy', cy);
         }

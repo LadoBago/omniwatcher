@@ -13,7 +13,10 @@ namespace OmniWatcher.Controllers
     {
         public GetSessionsResponse GetSessions(string channel, string code)
         {
-            return SessionDataService.Default.GetSessions(channel, code);
+            GetSessionsResponse res = new GetSessionsResponse();
+            res.SessionsList = SessionDataService.Default.GetSessions(channel);
+            res.Code = code;
+            return res;
         }
 
         public SessionDataModel GetSession(string channel, int id)

@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BasisChannelsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChannelIdentitySessions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChannelID" Type="tinyint" Nullable="false" />
+          <Property Name="RefNum" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SessionKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ForeignID" Type="int" />
+          <Property Name="InsertDate" Type="datetime" Nullable="false" />
+          <Property Name="LastActiveDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Channels">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descrip" Type="nvarchar" MaxLength="150" />
+          <Property Name="PasswordHash" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="AuthenticationClass" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="SessionClass" Type="varchar" MaxLength="500" />
+          <Property Name="SessionTimeout" Type="tinyint" Nullable="false" />
+          <Property Name="AutoRegister" Type="bit" Nullable="false" />
+          <Property Name="MultiSession" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BasisChannels.dbo.dm_client_activity_online' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="dm_client_activity_online">
+          <Key>
+            <PropertyRef Name="session_id" />
+            <PropertyRef Name="ident" />
+            <PropertyRef Name="last_active_date" />
+          </Key>
+          <Property Name="session_id" Type="int" Nullable="false" />
+          <Property Name="channel" Type="nvarchar" MaxLength="150" />
+          <Property Name="client" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ident" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="branch" Type="nvarchar" MaxLength="4000" />
+          <Property Name="operator" Type="nvarchar" MaxLength="4000" />
+          <Property Name="duration" Type="varchar" MaxLength="30" />
+          <Property Name="client_employee" Type="int" />
+          <Property Name="last_active_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BasisChannelsModelStoreContainer">
+          <EntitySet Name="ChannelIdentitySessions" EntityType="Self.ChannelIdentitySessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Channels" EntityType="Self.Channels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dm_client_activity_online" EntityType="Self.dm_client_activity_online" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [dm_client_activity_online].[session_id] AS [session_id], 
+    [dm_client_activity_online].[channel] AS [channel], 
+    [dm_client_activity_online].[client] AS [client], 
+    [dm_client_activity_online].[ident] AS [ident], 
+    [dm_client_activity_online].[branch] AS [branch], 
+    [dm_client_activity_online].[operator] AS [operator], 
+    [dm_client_activity_online].[duration] AS [duration], 
+    [dm_client_activity_online].[client_employee] AS [client_employee], 
+    [dm_client_activity_online].[last_active_date] AS [last_active_date]
+    FROM [dbo].[dm_client_activity_online] AS [dm_client_activity_online]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BasisChannelsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChannelIdentitySession">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChannelID" Type="Byte" Nullable="false" />
+          <Property Name="RefNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SessionKey" Type="Guid" Nullable="false" />
+          <Property Name="ForeignID" Type="Int32" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastActiveDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="BasisChannelsEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChannelIdentitySessions" EntityType="Self.ChannelIdentitySession" />
+          <EntitySet Name="Channels" EntityType="BasisChannelsModel.Channel" />
+          <EntitySet Name="dm_client_activity_online" EntityType="BasisChannelsModel.dm_client_activity_online" />
+        </EntityContainer>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descrip" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="false" />
+          <Property Name="AuthenticationClass" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SessionClass" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SessionTimeout" Type="Byte" Nullable="false" />
+          <Property Name="AutoRegister" Type="Boolean" Nullable="false" />
+          <Property Name="MultiSession" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dm_client_activity_online">
+          <Key>
+            <PropertyRef Name="session_id" />
+            <PropertyRef Name="ident" />
+            <PropertyRef Name="last_active_date" />
+          </Key>
+          <Property Name="session_id" Type="Int32" Nullable="false" />
+          <Property Name="channel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="client" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ident" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="branch" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="operator" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="duration" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="client_employee" Type="Int32" />
+          <Property Name="last_active_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BasisChannelsModelStoreContainer" CdmEntityContainer="BasisChannelsEntities1">
+          <EntitySetMapping Name="ChannelIdentitySessions">
+            <EntityTypeMapping TypeName="BasisChannelsModel.ChannelIdentitySession">
+              <MappingFragment StoreEntitySet="ChannelIdentitySessions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ChannelID" ColumnName="ChannelID" />
+                <ScalarProperty Name="RefNum" ColumnName="RefNum" />
+                <ScalarProperty Name="SessionKey" ColumnName="SessionKey" />
+                <ScalarProperty Name="ForeignID" ColumnName="ForeignID" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="LastActiveDate" ColumnName="LastActiveDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="BasisChannelsModel.Channel">
+              <MappingFragment StoreEntitySet="Channels">
+                <ScalarProperty Name="MultiSession" ColumnName="MultiSession" />
+                <ScalarProperty Name="AutoRegister" ColumnName="AutoRegister" />
+                <ScalarProperty Name="SessionTimeout" ColumnName="SessionTimeout" />
+                <ScalarProperty Name="SessionClass" ColumnName="SessionClass" />
+                <ScalarProperty Name="AuthenticationClass" ColumnName="AuthenticationClass" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Descrip" ColumnName="Descrip" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dm_client_activity_online">
+            <EntityTypeMapping TypeName="BasisChannelsModel.dm_client_activity_online">
+              <MappingFragment StoreEntitySet="dm_client_activity_online">
+                <ScalarProperty Name="last_active_date" ColumnName="last_active_date" />
+                <ScalarProperty Name="client_employee" ColumnName="client_employee" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="operator" ColumnName="operator" />
+                <ScalarProperty Name="branch" ColumnName="branch" />
+                <ScalarProperty Name="ident" ColumnName="ident" />
+                <ScalarProperty Name="client" ColumnName="client" />
+                <ScalarProperty Name="channel" ColumnName="channel" />
+                <ScalarProperty Name="session_id" ColumnName="session_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

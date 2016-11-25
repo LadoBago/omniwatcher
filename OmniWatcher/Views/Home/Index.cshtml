@@ -3,11 +3,15 @@
     @Scripts.Render("~/bundles/angular")
     <script src="~/Scripts/Site/main.js"></script>
     <script src="~/Angular/app.module.js"></script>
+    <script type="text/javascript">var app= "@(ViewData["appl"].ToString())"</script>
 }
 
 <div id="div-channels" ng-app="channelsApp" ng-controller="channelsController as controller">
     <div class="channel" ng-attr-id="{{'div-' + channel.code}}" ng-repeat="channel in channels">
         <div class="channel-activity">
+            <div class="channel-descrip">
+                <span>{{channel.code}}</span><span class="delimiter">|</span><span>{{channel.sessions.length}}</span>
+            </div>
             <svg height="100%" width="100%">
                 <circle 
                         my-fill-color="{{session.IsEmployee}}" 

@@ -37,6 +37,6 @@ namespace OmniWatcher.Models
             get { return GetDiffMins(this.LastActiveDate); }
         }
 
-        private Func<DateTime, int> GetDiffMins = e => (int)Math.Min((DateTime.Now - e).TotalMinutes, 60);
+        private Func<DateTime, int> GetDiffMins = e => (int)Math.Min((DateTime.Now - e).TotalSeconds, 3600);
     }
 }
