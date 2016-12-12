@@ -1,8 +1,8 @@
 ﻿@section scripts
 {
     @Scripts.Render("~/bundles/angular")
-    <script src="~/Scripts/Site/main.js"></script>
-    <script src="~/Angular/app.module.js"></script>
+    @Scripts.Render("~/bundles/main")
+    @Scripts.Render("~/bundles/appmodule")
     <script type="text/javascript">var app= "@(ViewData["appl"].ToString())"</script>
 }
 
@@ -11,6 +11,9 @@
         <div class="channel-activity">
             <div class="channel-descrip">
                 <span>{{channel.code}}</span><span class="delimiter">|</span><span>{{channel.sessions.length}}</span>
+            </div>
+            <div class="channel-chart">
+                <canvas ng-attr-id="{{'canvas-' + channel.code}}" my-chart="{{channel.code}}"></canvas>
             </div>
             <svg height="100%" width="100%">
                 <circle 

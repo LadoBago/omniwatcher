@@ -26,6 +26,12 @@ namespace OmniWatcher
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/main").Include(
+                        "~/Scripts/Site/main.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/appmodule").Include(
+                        "~/Scripts/Site/app.module.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

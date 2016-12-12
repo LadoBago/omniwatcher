@@ -78,3 +78,18 @@ span.delimiter {
 div.channel-activity svg {
     z-index: 0;
 }
+
+div.channel-activity div.channel-chart {
+    position: absolute;
+    right: 5px;
+    top: 30px;
+    z-index: 1;
+    font-weight: bold;
+    height: 37%;
+    width: 37%
+}
+
+div.channel-activity div.channel-chart canvas {
+    height: 100%;
+    width: 100%;
+}

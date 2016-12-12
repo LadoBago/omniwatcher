@@ -223,7 +223,7 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Angular\app.module.js" />
+    <Content Include="Scripts\Site\app.module.js" />
     <EntityDeploy Include="Dal\OmniEdm.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OmniEdm.Designer.cs</LastGenOutput>
