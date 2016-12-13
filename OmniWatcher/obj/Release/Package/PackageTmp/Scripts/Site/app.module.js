@@ -7,7 +7,7 @@ var initchannels = {
 };
 
 var maxChartLen = 300
-    , maxSessionsCnt = 300;
+    , maxSessionsCnt = 200;
 
 function getDataFactory(http)
 {
@@ -17,6 +17,17 @@ function getDataFactory(http)
         },
         getSessions: function (channel, code) {
             var url = '/api/Sessions/' + channel + '/' + code;
+            if (app.length > 0)
+                url = '/' + app + url;
+
+            return http({
+                method: 'GET',
+                url: url,
+                cache: false
+            });
+        },
+        getSession: function (channel, sessionId) {
+            var url = '/api/Session/' + channel + '/' + sessionId;
             if (app.length > 0)
                 url = '/' + app + url;
 
@@ -35,7 +46,7 @@ channelsApp.factory("dataFactory", ["$http", getDataFactory]);
 
 function channelsController(scope, dataService, interval)
 {
-    var afterMaxSessionsAssignCounter = 0, maxSessionsCntNew = 300;
+    var afterMaxSessionsAssignCounter = 0, maxSessionsCntNew = maxSessionsCnt;
     var f = function () {
         afterMaxSessionsAssignCounter++;
         for (var ch in scope.channels) {
@@ -65,6 +76,8 @@ function channelsController(scope, dataService, interval)
                             afterMaxSessionsAssignCounter = 0;
                         }
 
+                        ch.ssnCnt = ch.sessions.length;
+                        ch.eSsnCnt = employees;
                         ch.chart.push(ch.sessions.length);
                         ch.charte.push(employees);
                         if (ch.chart.length > maxChartLen)
@@ -119,7 +132,7 @@ function channelsController(scope, dataService, interval)
                             ctx.beginPath();
                             ctx.moveTo(getx(i - 1), gety(chart[i - 1] - charte[i - 1]));
                             ctx.lineTo(x, y);
-                            ctx.strokeStyle = "green";
+                            ctx.strokeStyle = "lightgreen";
                             ctx.stroke();
                         }
                     }
@@ -132,6 +145,17 @@ function channelsController(scope, dataService, interval)
     scope.channels = dataService.getChannels();
     f();
     interval(f, 5000);
+
+    scope.circleClick = function () {
+        var scopeObj = this;
+        dataService.getSession(scopeObj.session.Channel, scopeObj.session.SessionId)
+            .then(function (response) {
+                scopeObj.$parent.selectedSession = response.data;
+            },
+            function (response) {
+
+            });
+    };
 }
 
 channelsApp.controller("channelsController", ["$scope", "dataFactory", "$interval", channelsController]);
@@ -202,38 +226,3 @@ function myFillColorAttribDirective() {
 }
 
 channelsApp.directive("myFillColor", myFillColorAttribDirective);
-
-function myChartAttribDirective() {
-    var directive = {
-        restrict: "A",
-        link: function (scope, element, attrs, controller, transcludeFn) {
-            var channelCode = attrs.myChart;
-            var el = element[0];
-            var h = el.clientHeight;
-            var w = el.clientWidth;
-
-            var ctx = el.getContext("2d");
-            ctx.beginPath();
-
-            var chart = scope.channels[channelCode].chart;
-            var i = 0;
-            for (var ch in chart) {
-                var x = 2 + i * w / chartLen;
-                var y = h * Math.max(ch.Sessions / 300, 1);
-
-                if (i = 0) {
-                    ctx.move(x, y);
-                    tmpFlag = false;
-                }
-                else
-                    ctx.lineTo(x, y);
-                i = i + 1;
-            }
-            ctx.stroke();
-        }
-    };
-
-    return directive;
-}
-
-channelsApp.directive("myChart", myChartAttribDirective);

@@ -75,6 +75,14 @@ span.delimiter {
     padding: 0px 5px 0px 5px;
 }
 
+span.emp {
+    color: orange;
+}
+
+span.nonemp {
+    color: lightgreen;
+}
+
 div.channel-activity svg {
     z-index: 0;
 }
